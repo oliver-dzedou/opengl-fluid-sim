@@ -9,7 +9,7 @@ import "vendor:raylib"
 WIDTH :: 1600
 HEIGHT :: 900
 
-IS_SIMPLE :: false
+IS_SIMPLE :: true
 
 main :: proc() {
 	/* ---== INITIALIZATION ---== */
@@ -69,8 +69,8 @@ main :: proc() {
 			dx := f32(mouse_delta.x)
 			dy := -f32(mouse_delta.y)
 
-			vx := dx * VELOCITY_INJECTION // @frametime dt scaling not needed, that's already done in the shader
-			vy := dy * VELOCITY_INJECTION // @frametime dt scaling not needed, that's already done in the shader
+			vx := dx * VELOCITY_INJECTION
+			vy := dy * VELOCITY_INJECTION
 			fluids.push_injection(
 				&fluid_sim,
 				fluids.Injection {

@@ -8,12 +8,6 @@ layout(std430, binding = 0) buffer ssboB {
     vec4 data_b[];
 };
 
-// Boundary enforcement for velocity stored in data_b.xy
-// Idea: impose impermeable, free-slip walls on the box boundary.
-// Impermeable (no-through-flow): normal component of velocity = 0 at the wall.
-// Free-slip: tangential component keeps zero *normal derivative* at the wall.
-// We implement this by copying the tangential component from the first interior
-// cell (enforcing ∂u_t/∂n = 0) and zeroing the normal component (u_n = 0).
 void main() {
     int x = int(gl_GlobalInvocationID.x);
     int y = int(gl_GlobalInvocationID.y);
@@ -38,8 +32,4 @@ void main() {
         data_b[ix(width - 1, y)].x = 0.0;
         data_b[ix(width - 1, y)].y = n.y;
     }
-
-    // Note on corners: a corner thread satisfies two branches (e.g., y==0 and x==0),
-    // so both normal components are zeroed and each tangential component is copied
-    // from the adjacent interior cell.
 }
